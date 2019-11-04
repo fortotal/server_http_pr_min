@@ -21,9 +21,9 @@ def post():
         datafrHash = hash[resp["key"]]
         return json.dumps({"status": "Ok", "message": datafrHash}).encode("utf-8")
     except KeyError:
-        return json.dumps({"status": "Not Found"}).encode("utf-8")
+        return json.dumps({"status": "Not Found"}).encode("utf-8"), '404'
     except:
-        return "Internal Server Error".encode("utf-8")
+        return "Internal Server Error".encode("utf-8"), '403'
 
 @appf.route("/delete", methods = ["DELETE"])
 def delete():
@@ -33,9 +33,9 @@ def delete():
         del hash[resp["key"]]
         return json.dumps({"status":"OK"}).encode("utf-8")
     except KeyError:
-        return json.dumps({"status": "Not Found"}).encode("utf-8")
+        return json.dumps({"status": "Not Found"}).encode("utf-8"), '404'
     except:
-        return "Internal Server Error".encode("utf-8")
+        return "Internal Server Error".encode("utf-8"), '403'
 
 @appf.route("/put", methods = ["PUT"])
 def put():
@@ -45,6 +45,6 @@ def put():
         hash[resp["key"]] = resp["message"]
         return json.dumps({"status":"Create"}).encode("utf-8")
     except:
-        return "Internal Server Error".encode("utf-8")
+        return "Internal Server Error".encode("utf-8"), '403'
 
 appf.run(host = HOST, port = PORT)
